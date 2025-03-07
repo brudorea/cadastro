@@ -1,0 +1,15 @@
+Atividade de avaliação - individual
+Desenvolvimento de um cadastro de clientes usando electron e mongoDB Atlas
+
+Parte 1
+- Criar um repositório no GitHub e clonar no computador
+- Iniciar um novo projeto electron
+- Criar a tela principal e personalizar a janela (livre)
+- Criar um menu personalizado, da seguinte forma:
+
+Cadastro    Relatório    Ferramentas	  Ajuda	
+    Sair      Clientes    Aplicar Zoom     Repositório
+                          Reduzir          Sobre
+                          Restaurar Zoom
+                          ______________
+                          DevTools   

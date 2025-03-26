@@ -15,6 +15,7 @@ const path = require('node:path')
 // Importação dos métodos conectar e desconectar (modulo de conexão)
  
 const {conectar, desconectar} = require('./database.js')
+const { on } = require('node:events')
  
 // Janela principal
 let win
@@ -23,7 +24,7 @@ const createWindow = () => {
   nativeTheme.themeSource = 'light'
   win = new BrowserWindow({
     width: 1010, // largura
-    height: 900, // altura
+    height: 720, // altura
     //frame: false
     //resizable: false,
     //minimizable: false,

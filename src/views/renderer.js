@@ -30,36 +30,9 @@ api.dbStatus((event, message) => {
 // ============================================================================================================
 // ==================== CRUD Create =====================
 
-//Recebe o objeto com os dados
-ipcMain.on('create-cliente', async (event, cadastroCliente) => {
-    console.log(newCliente)
-  
-    const newClientes = clienteModel({ // nomeCampo: newCliente.caompoRenderer,
-      nomeCliente: newCliente.nomeCli,
-      telCliente: newCliente.telCli,
-      email: newCliente.emailCli,
-      senha: newCliente.senhaCli,
-      cep: newCliente.cepCli,
-      cidade: newCliente.cidadeCli,
-      uf: newCliente.ufCli,
-      logradouro: newCliente.logradouroCli,
-      bairro: newCliente.bairroCli,
-      cpf: newCliente.cpfCli,
-      complemento: newCliente.complementoCli,
-    })
-  
-    // Salvar no MongoDB
-    cadastroCliente.save()
-  })
-  
-  
-  // ================= FIM CRUD Create ====================
-
 // processo de cadastro do cliente //
 
-console.log("teste")
-
-const foco = document.getElementById('inputNome')
+const foco = document.getElementById('frmCli')
 
 document.addEventListener('DOMContentLoaded', () => {
     foco.focus()// iniciar documento com foca na caixa de texto
@@ -67,18 +40,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // ============== Captura de dados ============== //
-let formCli = document.getElementById('formCli')
-let nome = document.getElementById('inputNome')
-let tel = document.getElementById('inputTel')
-let email = document.getElementById('inputEmail4')
-let senha = document.getElementById('inputPassword4')
+let formCli = document.getElementById('frmCli')
+let nome = document.getElementById('nome')
+let tel = document.getElementById('tel')
+let email = document.getElementById('email')
 let cep = document.getElementById('cep')
 let cidade = document.getElementById('cidade')
 let uf = document.getElementById('uf')
 let logradouro = document.getElementById('logradouro')
+let numero = document.getElementById('numero')
 let bairro = document.getElementById('bairro')
 let cpf = document.getElementById('cpf')
-let complemento = document.getElementById('inputCompl')
+let complemento = document.getElementById('complemento')
 
 //= CRUD CREATE ===============================================//
 
@@ -90,30 +63,33 @@ formCli.addEventListener('submit', async (event) => {
         nome.value, 
         tel.value,
         email.value,
-        senha.value,
         cep.value,
         cidade.value,
         uf.value,
         logradouro.value,
+        numero.value,
         bairro.value,
-        cpf.value
+        cpf.value,
+        complemento.value
+        
     )
 
-    const newCliente = {
+    const cadastroCliente = {
         nomeCli: nome.value,
         telCli: tel.value,
         emailCli: email.value,
-        senhaCli: senha.value,
         cepCli: cep.value,
         cidadeCli: cidade.value,
         ufCli: uf.value,
         logradouroCli: logradouro.value,
         bairroCli: bairro.value,
+        numeroCli: numero.value,
         cpfCli: cpf.value,
         complementoCli: complemento.value
     }
 
-    api.addCliente(newCliente)
+    console.log("Enviando para o banco: ", cadastroCliente) //Teste 
+    api.createCliente(cadastroCliente)
 
 })
   // ================= FIM CRUD Create ====================

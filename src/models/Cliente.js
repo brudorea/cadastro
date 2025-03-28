@@ -4,7 +4,7 @@
  */
 
 // Importação dos recursos do mongoose
-const { model, Schema, version } = require('mongoose')
+const { model, Schema } = require('mongoose')
 
 // Criação da estrutura da coleção
 const cadastroSchema = new Schema({
@@ -12,9 +12,7 @@ const cadastroSchema = new Schema({
         type: String
     },
     cpf: {
-        type: String,
-        unique: true,
-        index: true
+        type: String,   
     },
     email: {
         type: String
@@ -46,4 +44,4 @@ const cadastroSchema = new Schema({
 }, { versionKey: false })
 
 // Exportar o modelo de dados para o main
-module.exports = model('Clientes', cadastroSchema)
+module.exports = model('Cliente', cadastroSchema)

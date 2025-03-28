@@ -16,6 +16,8 @@ const path = require('node:path')
  
 const {conectar, desconectar} = require('./database.js')
 const { on } = require('node:events')
+
+const clienteModel = require('./src/models/Cliente.js')
  
 // Janela principal
 let win
@@ -172,3 +174,29 @@ const template = [
   }
 ]
 
+// ========================== CRUD CREATE ===========================
+
+// Recebimento do objeto que contem os dados da nota
+ipcMain.on('create-cliente', async (event, cadastroCliente) => {
+  //IMPORTANTE! Teste do reecebimento do objeto (Passo 2)
+  console.log(cadastroCliente)
+  //Criar uma nova estrutura de dados para salvar no banco
+  //Atençaõ!! os atributos da estrutura precisam se idênticos ao modelo e os valores são obtidos atraves do objeto sticknotes
+ 
+  const newCliente = clienteModel({
+    nome: cadastroCliente.nome,
+    cpf: cadastroCliente.cpf,
+    email: cadastroCliente.email,
+    telefone: cadastroCliente.telefone,
+    cep: cadastroCliente.cep,
+    logradouro: cadastroCliente.logradouro,
+    numero: cadastroCliente.numero,
+    complemento: cadastroCliente.complemento,
+    bairro: cadastroCliente.bairro,
+    cidade: cadastroCliente.cidade,
+    uf: cadastroCliente.uf
+ 
+  })
+  //Salvar a nota no banco de dados (Passo 3:fluxo)
+  newCliente.save()
+})

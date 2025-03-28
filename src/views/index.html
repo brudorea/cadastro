@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <form> <!-- Início do formulário -->
+    <form id="frmCli"> <!-- Início do formulário -->
         <!-- Identificação do Usuário -->
         <fieldset class="border p-4 mt-4"> <!-- Cria um campo de identificação com borda e padding -->
 
@@ -35,7 +35,7 @@
 
                 <div class="col-sm-8"> <!-- Cria uma divisão para o campo de entrada -->
                     <label for="cnome" class="col-sm-2 col-form-label text-primary">Nome:</label> <!-- Label para o campo Nome -->
-                    <input type="text" name="nome" id="cnome" class="form-control" size="30" maxlength="50" required
+                    <input type="text" name="nome" id="nome" class="form-control" size="30" maxlength="50" required
                         autofocus>
                     <!-- Campo de texto para o nome, obrigatório e com foco automático -->
                 </div>
@@ -55,14 +55,14 @@
                 <div class="col-sm-5">
                     <label for="cemail" class="col-form-label text-primary">E-mail:</label>
                     <!-- Label para o campo E-mail -->
-                    <input type="email" name="email" id="cemail" class="form-control" size="30" maxlength="50" required>
+                    <input type="email" name="email" id="email" class="form-control" size="30" maxlength="50" required>
                     <!-- Campo para e-mail, obrigatório -->
                 </div>
 
                 <div class="col-sm-5">
                     <label for="cphone" class="col-form-label text-primary">Telefone:</label>
                     <!-- Label para o campo Telefone -->
-                    <input type="tel" name="telefone" id="cphone" class="form-control" size="15" maxlength="15" required
+                    <input type="tel" name="telefone" id="tel" class="form-control" size="15" maxlength="15" required
                         oninput="mascaraTelefone(this)">
                     <!-- Campo para telefone, com máscara aplicada via JavaScript -->
                 </div>
@@ -92,7 +92,7 @@
                 <div class="col-sm-3">
                     <label for="complemento" class="col-form-label text-primary">Complemento:</label>
                     <!-- Label para o campo Complemento -->
-                    <input type="text" id="complemento" class="form-control" id="inputComplemento"> <!-- Campo para Complemento -->
+                    <input type="text" id="complemento" class="form-control"> <!-- Campo para Complemento -->
                 </div>
 
             </div>

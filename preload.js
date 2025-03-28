@@ -15,6 +15,6 @@ ipcRenderer.send('db-connect')
 // permissões para estabelecer a comunicação entre processos
 contextBridge.exposeInMainWorld('api', {
     dbStatus: (message) => ipcRenderer.on('db-status', message),
-    createCadastro: (cadastroCliente) => ipcRenderer.send('create-cadastro', cadastroCliente) // Envia para o main um objeto - manda a estrutura de dados para ser gravada no banco de dados
+    createCliente: (cadastroCliente) => ipcRenderer.send('create-cliente', cadastroCliente) // Envia para o main um objeto - manda a estrutura de dados para ser gravada no banco de dados
 })
 

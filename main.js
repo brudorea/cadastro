@@ -45,6 +45,7 @@ const createWindow = () => {
 }
  
 // Janela SOBRE
+let about
 function aboutWindow() {
   nativeTheme.themeSource='light'
   // Obter a janela principal
@@ -59,8 +60,7 @@ function aboutWindow() {
       minimizable: false,
       // Estabelecer uma relação hierárquica entre janelas
       parent: mainWindow,
-      // Criar uma janela modal (só retorna a principal quando encerrada)
-      modal: true
+      modal: true // Criar uma janela modal (só retorna a principal quando encerrada)
   })
 }
  
@@ -171,3 +171,4 @@ const template = [
     ]
   }
 ]
+

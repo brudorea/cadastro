@@ -1,3 +1,19 @@
+/*Validadores para cadastro de um cliente*/
+
+// Validação de e-mail
+function validarEmail() {
+    let email = document.getElementById('inputEmail4').value;
+    let regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let emailInput = document.getElementById('inputEmail4');
+
+    if (!regexEmail.test(email)) {
+        alert('E-mail inválido! Insira um e-mail válido.');
+        emailInput.focus();
+        return false;
+    }
+    return true;
+}
+
 function buscarEndereco() {
     let cep = document.getElementById('cep').value
     let urlAPI = `https://viacep.com.br/ws/${cep}/json/`
@@ -75,7 +91,6 @@ function validarCPF(input) {
         input.setCustomValidity("CPF inválido!"); // Mensagem para CPF inválido
         return false;
     }
-}
 
 document.querySelector("form").addEventListener("submit", function (event) {
     let nome = document.getElementById("cnome").value.trim();
@@ -89,6 +104,7 @@ document.querySelector("form").addEventListener("submit", function (event) {
         event.preventDefault();
     }
 });
+}
 
 //document.getElementById('btnAdicionar').addEventListener('click', function () {
     // Função para adicionar os dados

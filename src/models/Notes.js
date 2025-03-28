@@ -1,20 +1,49 @@
 /**
- * Modelo de dados das notas 
- * Criação da coleção 
+ * Modelo de dados das notas
+ * Criação da coleção
  */
 
-// Importação do recursos do mongoose
-const { model, Schema } = require('mongoose')
+// Importação dos recursos do mongoose
+const { model, Schema, version } = require('mongoose')
 
 // Criação da estrutura da coleção
-const noteSchema = new Schema({
-    texto: {
+const cadastroSchema = new Schema({
+    nome: {
         type: String
     },
-    cor: {
+    cpf: {
+        type: String,
+        unique: true,
+        index: true
+    },
+    email: {
+        type: String
+    },
+    fone: {
+        type: String
+    },
+    cep: {
+        type: String
+    },
+    logradouro: {
+        type: String
+    },
+    numero: {
+        type: String
+    },
+    complemento: {
+        type: String
+    },
+    bairro: {
+        type: String
+    },
+    cidade: {
+        type: String
+    },
+    uf: {
         type: String
     }
-}, { versionKey: false})
+}, { versionKey: false })
 
-// exportar o modelo de dados para o main
-module.exports = model('Notas', noteSchema)
+// Exportar o modelo de dados para o main
+module.exports = model('Clientes', cadastroSchema)

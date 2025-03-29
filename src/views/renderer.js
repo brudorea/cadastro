@@ -32,15 +32,17 @@ api.dbStatus((event, message) => {
 
 // processo de cadastro do cliente //
 
-const foco = document.getElementById('frmCli')
+const foco = document.getElementById('buscarCliente')
 
 document.addEventListener('DOMContentLoaded', () => {
     foco.focus()// iniciar documento com foca na caixa de texto
+    btnUpdate.disabled = true
+    btnDelete.disabled = true
 })
 
 
 // ============== Captura de dados ============== //
-let formCli = document.getElementById('frmCli')
+let frmCli = document.getElementById('frmCli')
 let nome = document.getElementById('nome')
 let tel = document.getElementById('tel')
 let email = document.getElementById('email')
@@ -55,7 +57,7 @@ let complemento = document.getElementById('complemento')
 
 //= CRUD CREATE ===============================================//
 
-formCli.addEventListener('submit', async (event) => {
+frmCli.addEventListener('submit', async (event) => {
     // evitar comportamento padrão de recarregar a página
     event.preventDefault()
 
@@ -93,4 +95,17 @@ formCli.addEventListener('submit', async (event) => {
 
 })
   // ================= FIM CRUD Create ====================
+
+  // ================== Resetar o formulário ===================  
+  function resetForm() {
+    // recarregar a página
+    location.reload()
+  }
+
+  // Uso da API resetForm quando salvar, editor ou excluir um cliente
+  api.resetForm((args) => { 
+    resetForm()
+  })
+
+  // =============== FIM - Resetar o formulário ================
 

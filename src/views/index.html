@@ -43,7 +43,7 @@
                 <div class="col-sm-4">
 
                     <label for="cpf" class="col-form-label text-primary">CPF:</label> <!-- Label para o campo CPF -->
-                    <input type="text" id="cpf" name="cpf" class="form-control" maxlength="14" required
+                    <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" class="form-control" maxlength="14" required
                         oninput="validarCPF(this)">
                     <!-- Campo para CPF, com validação via JavaScript -->
                 </div>
@@ -63,7 +63,7 @@
                     <label for="cphone" class="col-form-label text-primary">Telefone:</label>
                     <!-- Label para o campo Telefone -->
                     <input type="tel" name="telefone" id="tel" class="form-control" size="15" maxlength="15" required
-                        oninput="mascaraTelefone(this)">
+                        oninput="mascaraTelefone(this)" placeholder="(11) 00000-0000">
                     <!-- Campo para telefone, com máscara aplicada via JavaScript -->
                 </div>
 

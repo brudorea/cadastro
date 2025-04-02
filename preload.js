@@ -16,6 +16,16 @@ ipcRenderer.send('db-connect')
 contextBridge.exposeInMainWorld('api', {
     dbStatus: (message) => ipcRenderer.on('db-status', message),
     createCliente: (cadastroCliente) => ipcRenderer.send('create-cliente', cadastroCliente),
-    resetForm: (args) => ipcRenderer.on('reset-form', args)
+    resetForm: (args) => ipcRenderer.on('reset-form', args),
 })
+
+contextBridge.exposeInMainWorld('electron', {
+    sendMessage: (channel, data) => {
+      ipcRenderer.send(channel, data)
+    },
+    onReceiveMessage: (channel, callback) => {
+      ipcRenderer.on(channel, callback)
+    }
+})
+
 

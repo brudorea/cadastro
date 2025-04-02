@@ -109,3 +109,17 @@ frmCli.addEventListener('submit', async (event) => {
 
   // =============== FIM - Resetar o formulário ================
 
+  // ============================================================
+// == Tratamento de exceção CPF duplicado =====================
+
+// Enviar a mensagem de reset-cpf para o main.js
+window.electron.onReceiveMessage('reset-cpf', () => {
+    cpf.value = "";        // Limpar o campo CPF
+    cpf.focus();           // Focar no campo CPF
+    cpf.style.border = '2px solid red'; // Adicionar borda vermelha ao campo CPF
+})
+
+// == Tratamento de exceção CPF duplicado =====================
+// ============================================================
+
+

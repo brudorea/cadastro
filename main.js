@@ -210,14 +210,30 @@ ipcMain.on('create-cliente', async (event, cadastroCliente) => {
       buttons: ['OK']
     }).then((result) => {
       // se o botão OK for pressionado
-      if(result.response ===0) {
+      if (result.response === 0) {
         // enviar um pedido para o renderizador limpar os campos (preload.js)
         event.reply('reset-form')
       }
     })
 
   } catch (error) {
-    console.log(error)
-  }
+    if (error.code === 11000) {
+      dialog.showMessageBox({
+        type: 'error',
+        title: "Atenção!",
+        message: "CPF já cadastrado! \nVerifique o número digitado.",
+        buttons: ['OK']
+        
+      }).then((result) => {
+        // Se o botão OK for pressionado
+        if (result.response === 0) {
+          // Limpar o CPF após o preenchimento de CPF duplicado
+          event.reply('reset-cpf') 
+        }
+      })
+    } else {
+      console.log(error)
+    }
 
+  }
 })

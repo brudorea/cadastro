@@ -12,7 +12,9 @@ const cadastroSchema = new Schema({
         type: String
     },
     cpf: {
-        type: String,   
+        type: String,
+        unique: true,
+        index: true   
     },
     email: {
         type: String

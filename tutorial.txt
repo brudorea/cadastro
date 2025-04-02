@@ -13,3 +13,6 @@ Cadastro    Relatório    Ferramentas	  Ajuda
                           Restaurar Zoom
                           ______________
                           DevTools   
+==========================================================================
+
+Atualização da Nova Sala

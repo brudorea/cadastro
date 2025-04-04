@@ -35,7 +35,7 @@
 
                 <div class="col-sm-8"> <!-- Cria uma divisão para o campo de entrada -->
                     <label for="cnome" class="col-sm-2 col-form-label text-primary">Nome:</label> <!-- Label para o campo Nome -->
-                    <input type="text" name="nome" id="nome" class="form-control" size="30" maxlength="50" required
+                    <input type="text" name="nome" id="nome" class="form-control" size="30" maxlength="30" required
                         autofocus>
                     <!-- Campo de texto para o nome, obrigatório e com foco automático -->
                 </div>
@@ -55,7 +55,7 @@
                 <div class="col-sm-5">
                     <label for="cemail" class="col-form-label text-primary">E-mail:</label>
                     <!-- Label para o campo E-mail -->
-                    <input type="email" name="email" id="email" class="form-control" size="30" maxlength="50" required>
+                    <input type="email" name="email" id="email" class="form-control" size="30" maxlength="25" required>
                     <!-- Campo para e-mail, obrigatório -->
                 </div>
 
@@ -86,13 +86,13 @@
                 <div class="col-sm-4">
                     <label for="numero" class="col-form-label text-primary">Número:</label>
                     <!-- Label para o campo Número -->
-                    <input type="text" id="numero" class="form-control"> <!-- Campo para Número -->
+                    <input type="text" id="numero" class="form-control" min="0" max="9999" maxlength="4"> <!-- Campo para Número -->
                 </div>
 
                 <div class="col-sm-3">
                     <label for="complemento" class="col-form-label text-primary">Complemento:</label>
                     <!-- Label para o campo Complemento -->
-                    <input type="text" id="complemento" class="form-control"> <!-- Campo para Complemento -->
+                    <input type="text" id="complemento" class="form-control" maxlength="30"> <!-- Campo para Complemento -->
                 </div>
 
             </div>

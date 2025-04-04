@@ -8,7 +8,8 @@ console.log("Electron - Processo")
 // shell (acessar links externos no navegador padrão)
 // ipcRenderer permite estabalecer uma comunicação entre processos (IPC) main.js <=> renderer.js
 // dialog é módulo electron para ativar caixa de mensagens 
-const { app, BrowserWindow, nativeTheme, Menu, shell, ipcMain, dialog } = require('electron/main')
+// shell acessa links e aplicações externas
+const { app, BrowserWindow, nativeTheme, Menu, ipcMain, dialog, shell } = require('electron/main')
 
 // Ativação do preload.js (importação do path)
 const path = require('node:path')
@@ -18,7 +19,14 @@ const path = require('node:path')
 const { conectar, desconectar } = require('./database.js')
 const { on } = require('node:events')
 
+// Importação do Schema Clientes da camada model
 const clienteModel = require('./src/models/Cliente.js')
+
+// Importação da biblioteca nativa do JS para manipular arquivos
+const fs = require('fs')
+
+// Importação do pacote jspdf (arquivos pdf) npm install jspdf
+const { jspdf, default: jsPDF } = require('jspdf')
 
 // Janela principal
 let win
@@ -115,19 +123,21 @@ app.commandLine.appendSwitch('log-level', '3')
 // Template do menu
 const template = [
   {
-    label: 'Notas',
+    label: 'Cadastro',
     submenu: [
-      {
-        label: 'Criar nota',
-        accelerator: 'Ctrl+N'
-      },
-      {
-        type: 'separator'
-      },
       {
         label: 'Sair',
         accelerator: 'Alt+F4',
         click: () => app.quit()
+      }
+    ]
+  },
+  {
+    label: 'Relatórios',
+    submenu: [
+      {
+        label: 'Clientes',
+        click: () => relatorioClientes()
       }
     ]
   },
@@ -223,12 +233,12 @@ ipcMain.on('create-cliente', async (event, cadastroCliente) => {
         title: "Atenção!",
         message: "CPF já cadastrado! \nVerifique o número digitado.",
         buttons: ['OK']
-        
+
       }).then((result) => {
         // Se o botão OK for pressionado
         if (result.response === 0) {
           // Limpar o CPF após o preenchimento de CPF duplicado
-          event.reply('reset-cpf') 
+          event.reply('reset-cpf')
         }
       })
     } else {
@@ -237,3 +247,92 @@ ipcMain.on('create-cliente', async (event, cadastroCliente) => {
 
   }
 })
+// ========================== FIM - CRUD CREATE ===========================
+
+// ========================== RELATÓRIO DE CLIENTES ===========================
+async function relatorioClientes() {
+  try {
+    // ===================================
+    //    Configuração do documento pdf
+    // ===================================
+    const doc = new jsPDF('p', 'mm', 'a4') // p (portrait) l (landscape)
+    // a4 (210 mm x 297 mm)
+
+    // Inserir data atual no documento
+    const dataAtual = new Date().toLocaleDateString('pt-BR')
+    // doc.setFontSize() altera o tamanho da fonte em ponto(= word)
+    doc.setFontSize(10)
+    // doc.text() escreve um texto no documento 
+    doc.text(`Data: ${dataAtual}`, 170, 15) // (x,y (mm))
+    doc.setFontSize(18)
+    doc.text("Relatório de clientes", 15, 30)
+    doc.setFontSize(12)
+    let y = 40
+    // CABEÇALHO DA TABELA //
+    doc.text("Nome", 14, y)
+    doc.text("Telefone", 85, y)
+    doc.text("E-mail", 130, y)
+    y += 5
+    // Desenhar uma linha 
+    doc.setLineWidth(0.5)
+    doc.line(10, y, 200, y) // (10 (inicio)_______ 200 (fim))
+    y += 10
+
+
+    // ===================================================
+    //   Obter a listagem de clientes (ordem alfabética) 
+    // ===================================================
+
+    const clientes = await clienteModel.find().sort({ nome: 1 })
+    // Teste de recebimento (IMPORTANTE!)
+    // console.log(clientes) 
+    // popular o documento PDF com os clientes cadastrados
+    clientes.forEach((c) => {
+      if (y > 280) {
+        doc.addPage()
+        y = 20 // Margem de 20 mm (é o mesmo que 2cm) para iniciar a nova folha
+        // CABEÇALHO DA TABELA //
+        doc.text("Nome", 14, y)
+        doc.text("Telefone", 85, y)
+        doc.text("E-mail", 130, y)
+        y += 5
+        // Desenhar uma linha 
+        doc.setLineWidth(0.5)
+        doc.line(10, y, 200, y) // (10 (inicio)_______ 200 (fim))
+        y += 10
+      }
+      doc.text(c.nome, 14, y)
+      doc.text(c.fone, 85, y)
+      doc.text(c.email, 130, y)
+      y += 15
+    })
+
+
+    // ================================================
+    //   Numeração automática de páginas
+    // ================================================
+
+    const pages = doc.internal.getNumberOfPages()
+    for (let i=1; i<=pages; i++) {
+      doc.setPage(i)
+      doc.setFontSize(10)
+      doc.text(`Página ${1}`, 105, 290, {align: 'center'})
+    }
+
+
+    // ================================================
+    //   Abrir o arquivo PDF no sistema operacional 
+    // ================================================
+
+    // Definir o caminho do arquivo temporário e nome do arquivo com extensão .pdf (IMPORTANTE!)
+    const tempDir = app.getPath('temp')
+    const filePath = path.join(tempDir, 'clientes.pdf')
+    // salvar temporariamente o arquivo
+    doc.save(filePath)
+    // abrir o arquivo no aplicativo padrão de leitura de pdf do computador do usuário
+    shell.openPath(filePath)
+  } catch (error) {
+    console.log(error)
+  }
+}
+

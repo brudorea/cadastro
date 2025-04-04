@@ -316,7 +316,7 @@ async function relatorioClientes() {
     for (let i=1; i<=pages; i++) {
       doc.setPage(i)
       doc.setFontSize(10)
-      doc.text(`Página ${1}`, 105, 290, {align: 'center'})
+      doc.text(`Página ${i} de ${pages}`, 105, 290, {align: 'center'})
     }
 
 

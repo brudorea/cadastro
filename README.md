@@ -1,2 +1,2 @@
 # cadastro
-Atividade de desenvolvimento de cadastro de clientes usando Eletron e MongoDB Atlas.
+Projeto de cadastro de clientes usando o framework Electron e o banco de dados MongoDB

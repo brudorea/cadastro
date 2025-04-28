@@ -22,7 +22,7 @@
             <div class="input-group">
                 <input type="text" id="buscarCliente" class="form-control"
                     placeholder="Digite o nome ou CPF para buscar..." aria-label="Pesquisar Usuário">
-                <button class="btn btn-outline-primary" type="button" onclick="buscarCliente()">Buscar</button>
+                <button class="btn btn-outline-primary" type="button" onclick="buscarNome()">Buscar</button>
             </div>
         </div>
     </div>
@@ -34,41 +34,48 @@
             <div class="mb-3 row"> <!-- Cria uma linha para o campo de nome -->
 
                 <div class="col-sm-8"> <!-- Cria uma divisão para o campo de entrada -->
-                    <label for="cnome" class="col-sm-2 col-form-label text-primary">Nome:</label> <!-- Label para o campo Nome -->
-                    <input type="text" name="nome" id="nome" class="form-control" size="30" maxlength="30" required
-                        autofocus>
+                    <label for="validationDefault01" class="form-label text-primary">Nome Completo:</label>
+                    <!-- Label para o campo Nome -->
+                    <input type="text" class="form-control" id="nomeCliente" placeholder="Nome" maxlength="30" required>
                     <!-- Campo de texto para o nome, obrigatório e com foco automático -->
                 </div>
 
-                <div class="col-sm-4">
-
-                    <label for="cpf" class="col-form-label text-primary">CPF:</label> <!-- Label para o campo CPF -->
-                    <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" class="form-control" maxlength="14" required
-                        oninput="validarCPF(this)">
-                    <!-- Campo para CPF, com validação via JavaScript -->
+                <label for="cpfCliente" class="form-label text-primary">CPF:</label>
+                <div class="input-group">
+                    <input type="text" class="form-control w-75" id="cpfCliente" placeholder="Insira seu CPF"
+                        oninput="validarCPF(this)" required>
+                    <button class="btn btn-outline-primary rounded" type="button"
+                        onclick="buscarCliente()">Buscar</button>
+                        <style>
+                            #cpfCliente {
+                              max-width: 250px; /* Ajuste para o tamanho desejado */
+                            }
+                          </style>
+                          
                 </div>
+
 
             </div>
 
             <div class="mb-3 row"> <!-- Cria uma linha para o campo de e-mail, telefone e cep -->
 
                 <div class="col-sm-5">
-                    <label for="cemail" class="col-form-label text-primary">E-mail:</label>
+                    <label for="validationDefaultUsername" class="form-label text-primary">E-mail:</label>
                     <!-- Label para o campo E-mail -->
-                    <input type="email" name="email" id="email" class="form-control" size="30" maxlength="25" required>
+                    <input type="email" class="form-control" id="emailCliente" maxlength="30" required>
                     <!-- Campo para e-mail, obrigatório -->
                 </div>
 
                 <div class="col-sm-5">
-                    <label for="cphone" class="col-form-label text-primary">Telefone:</label>
+                    <label for="cfone" class="form-label text-primary">Telefone:</label>
                     <!-- Label para o campo Telefone -->
-                    <input type="tel" name="telefone" id="tel" class="form-control" size="15" maxlength="15" required
-                        oninput="mascaraTelefone(this)" placeholder="(00) 00000-0000">
+                    <input type="tel" class="form-control" id="telefoneCliente" placeholder="Insira seu telefone"
+                        required oninput="mascaraTelefone(this)">
                     <!-- Campo para telefone, com máscara aplicada via JavaScript -->
                 </div>
 
                 <div class="col-sm-2">
-                    <label for="cep" class="col-form-label text-primary">CEP:</label> <!-- Label para o campo CEP -->
+                    <label for="cep" class="form-label text-primary">CEP:</label> <!-- Label para o campo CEP -->
                     <input type="text" id="cep" class="form-control" maxlength="9" onblur="buscarEndereco()">
                     <!-- Campo para CEP, com função JavaScript para buscar o endereço ao perder o foco -->
                 </div>
@@ -78,21 +85,22 @@
             <div class="mb-3 row"> <!-- Cria uma linha para o campo de Logradouro, número e complemento -->
 
                 <div class="col-sm-5">
-                    <label for="logradouro" class="col-form-label text-primary">Logradouro:</label>
+                    <label for="logradouro" class="form-label text-primary">Logradouro:</label>
                     <!-- Label para o campo Logradouro -->
-                    <input type="text" id="logradouro" class="form-control"> <!-- Campo para Logradouro -->
+                    <input type="text" class="form-control" id="logradouro"> <!-- Campo para Logradouro -->
                 </div>
 
                 <div class="col-sm-4">
-                    <label for="numero" class="col-form-label text-primary">Número:</label>
+                    <label for="cnum" class="form-label text-primary">Número:</label>
                     <!-- Label para o campo Número -->
-                    <input type="text" id="numero" class="form-control" min="0" max="9999" maxlength="4"> <!-- Campo para Número -->
+                    <input type="number" class="form-control" id="numero" min="0" max="99999" required>
+                    <!-- Campo para Número -->
                 </div>
 
                 <div class="col-sm-3">
-                    <label for="complemento" class="col-form-label text-primary">Complemento:</label>
+                    <label for="ccomp" class="form-label text-primary">Complemento:</label>
                     <!-- Label para o campo Complemento -->
-                    <input type="text" id="complemento" class="form-control" maxlength="30"> <!-- Campo para Complemento -->
+                    <input type="text" class="form-control" id="complemento"> <!-- Campo para Complemento -->
                 </div>
 
             </div>
@@ -100,22 +108,22 @@
             <div class="mb-3 row"> <!-- Cria uma linha para o campo de bairro, cidade e uf -->
 
                 <div class="col-sm-4">
-                    <label for="bairro" class="col-form-label text-primary">Bairro:</label>
+                    <label for="bairro" class="form-label text-primary">Bairro:</label>
                     <!-- Label para o campo Bairro -->
-                    <input type="text" id="bairro" class="form-control"> <!-- Campo para Bairro -->
+                    <input type="text" class="form-control" id="bairro"> <!-- Campo para Bairro -->
                 </div>
 
                 <div class="col-sm-5">
-                    <label for="cidade" class="col-form-label text-primary">Cidade:</label>
+                    <label for="cidade" class="form-label text-primary">Cidade:</label>
                     <!-- Label para o campo Cidade -->
-                    <input type="text" id="cidade" class="form-control"> <!-- Campo para Cidade -->
+                    <input type="text" class="form-control" id="cidade"> <!-- Campo para Cidade -->
                 </div>
 
                 <div class="col-sm-3">
-                    <label for="uf" class="col-form-label text-primary">UF:</label> <!-- Label para o campo UF -->
-                    <select id="uf" name="uf" class="form-control" required>
+                    <label for="uf" class="form-label text-primary">UF:</label> <!-- Label para o campo UF -->
+                    <select id="uf" class="form-control">
                         <!-- Campo de seleção para UF, obrigatório -->
-                        <option value="">Selecione...</option> <!-- Opção padrão para selecionar o estado -->
+                        <option value="">Selecione</option> <!-- Opção padrão para selecionar o estado -->
                         <!-- Lista de opções para os estados do Brasil -->
                         <option value="AC">AC</option>
                         <option value="AL">AL</option>
@@ -149,7 +157,6 @@
 
             </div>
         </fieldset>
-
         <div class="mt-1 text-center form-group"> <!-- Seção para os botões no final do formulário -->
             <button type="submit" id="btnCreate" class="btn btn-success">Adicionar</button> <!-- Botão Adicionar -->
             <button type="submit" id="btnUpdate" class="btn btn-warning">Editar</button> <!-- Botão Editar -->

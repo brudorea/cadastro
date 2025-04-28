@@ -1,92 +1,69 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre</title>
+    <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/css/style.css">
     <style>
-        /* Resetando margens e preenchimento padrão */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* Estilos personalizados */
+        body {
+            background-color: #d3d3d3;
+            font-family: sans-serif;
         }
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            padding: 20px;
+        h1 {
+            font-size: 1.4rem;
         }
 
         h2 {
-            font-size: 1.8rem;
-            color: #000000;
-            text-align: center;
-            margin-bottom: 20px;
+            font-size: 1.2rem;
         }
 
-        h3 {
-            font-size: 1.5rem;
-            color: #2980b9;
-            text-align: center;
-            margin-bottom: 15px;
+        p,
+        ul {
+            font-size: 1.1rem;
+            line-height: 1.1rem;
         }
-
-        h4 {
-            font-size: 1rem;
-            color: #7f8c8d;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        p {
-            font-size: 1rem;
-            color: #34495e;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        /* Estilo para o container principal */
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        /* Estilo para as seções */
-        .footer {
-            margin-top: 30px;
-            font-size: 0.9rem;
-            color: #95a5a6;
-        }
-
-        /* Estilo de links, se necessário */
-        a {
-            text-decoration: none;
-            color: #2980b9;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
     </style>
 </head>
+
 <body>
     <div class="container">
-        <h2>Cadastro</h2>
-        <h3>Notas adesivas interativas</h3>
-        <h4>Autor: Bruno Henrique</h4>
-        <h4>Sob a licença MIT</h4>
-        <p>Versão 1.0</p>
-        <div class="footer">
-            <p>Desenvolvido com ❤️ por Bruno Henrique</p>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1>Sobre a aplicação</h1>
+                <p>Aplicação para cadastro de clientes de maneira rápida e eficiente.</p>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Detalhes do Projeto</h2>
+                <p><strong>Versão:</strong> 1.0</p>
+                <p><strong>Licença:</strong> MIT</p>
+                <p><strong>Autor:</strong> Erica Viana</p>
+                <p><strong>Descrição:</strong> Sistema desenvolvido para ajudar no gerenciamento de dados de clientes.
+                    Oferece uma interface simples e fácil de usar para inserção e consulta de informações cadastrais.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Funcionalidades</h2>
+                <ul>
+                    <li>Cadastro de clientes com campos essenciais como nome, endereço e contato.</li>
+                    <li>Interface simples e intuitiva.</li>
+                    <li>Armazenamento local dos dados (offline).</li>
+                    <li>Facilidade de uso em dispositivos móveis e desktops.</li>
+                </ul>
+            </div>
         </div>
     </div>
+
+    <script src="../public/js/bootstrap.min.js"></script>
 </body>
+
 </html>

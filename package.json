@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ericaviana12/cadastro.git"
+    "url": "git+https://github.com/brudorea/cadastro.git"
   },
-  "author": "Erica Viana",
+  "author": "Bruno Henrique",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ericaviana12/cadastro/issues"
+    "url": "https://github.com/brudorea/cadastro.git/issues"
   },
-  "homepage": "https://github.com/ericaviana12/cadastro#readme",
+  "homepage": "https://github.com/brudorea/cadastro#readme",
   "devDependencies": {
     "electron": "^35.0.0"
   },

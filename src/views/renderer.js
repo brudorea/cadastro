@@ -24,9 +24,9 @@ api.dbStatus((event, message) => {
     // Teste de recebimento da mensagem
     console.log(message)
     if (message === "conectado") {
-        document.getElementById('iconeDB').src = "../public/img/dbon_branco.png"
+        document.getElementById('iconeDB').src = "../public/img/dbon.png"
     } else {
-        document.getElementById('iconeDB').src = "../public/img/dboff_branco.png"
+        document.getElementById('iconeDB').src = "../public/img/dboff.png"
     }
 })
 
@@ -44,6 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
     //Desativar os botões
     btnUpdate.disabled = true
     btnDelete.disabled = true
+    // Ativar o botão adicionar
+    btnCreate.disabled = false
     //Iniciar o documento com foco na caixa de texto
     foco.focus()
 })
@@ -61,29 +63,160 @@ let complemento = document.getElementById('complemento')
 let bairro = document.getElementById('bairro')
 let cidade = document.getElementById('cidade')
 let uf = document.getElementById('uf')
-
+//Uso do Id para o delete e update
+let idClient = document.getElementById('inputIdClient')
 
 //===========================================================================
 //= Manipulação do Enter=====================================================
 function teclaEnter(event) {
     if (event.key === "Enter") {
-        event.preventDefault() // ignorar o comportamento padrão
+        event.preventDefault() // ignorar o comportamento padrão 
         //executar o método de busca do cliente
         buscarNome()
- 
+
+
     }
 }
- 
+
 //"Escuta" do teclado ('keydown' = pressionar a tecla )
 buscarCliente.addEventListener('keydown', teclaEnter)
- 
+
 //função para restaurar o padrão (tecla Enter)
 function restaurarEnter() {
     buscarCliente.removeEventListener('keydown', teclaEnter)
-} 
+}
+// ============
+
+
+function buscarCli() {
+
+    const nome = document.getElementById('nomeCliente').value
+
+    if (nome === "") {
+
+        api.validateSearch()
+    } else {
+        api.searchCliente(nome)
+
+
+    }
+}
+
+api.renderClientCliente((event, client) => {
+    if (event.key === "Enter") {
+        event.preventDefault() // ignorar o comportamento padrão 
+        //executanomer o método de busca do cliente
+        buscarCli()
+
+
+    }
+    
+    const clientData = JSON.parse(client)
+    arrayClient = clientData
+
+    arrayClient.forEach((c) => {
+        idClient.value = c._id
+        nomeCliente.value = c.nome
+        cpfCliente.value = c.cpf
+        emailCliente.value = c.email
+        telefoneCliente.value = c.telefone
+        cep.value = c.cep
+        logradouro.value = c.logradouro
+        numero.value = c.numero
+        complemento.value = c.complemento
+        bairro.value = c.bairro
+        cidade.value = c.cidade
+        uf.value = c.uf
+
+        // restaurar a tecla Enter
+
+        // desativar o botão adicionar
+        btnCreate.disabled = true
+        // ativar os botões editar e excluir
+        btnUpdate.disabled = false
+        btnDelete.disabled = false
+    })
+    
+    
+})
+
+
+
+function buscarCPF() {
+
+    const cpf = document.getElementById('cpfCliente').value
+
+    if (cpf === "") {
+         
+        nomeCliente.value = ""
+        emailCliente.value = ""
+        telefoneCliente.value = ""
+        cep.value = ""
+        logradouro.value = ""
+        numero.value = ""
+        complemento.value = ""
+        bairro.value = ""
+        cidade.value = ""
+        uf.value = ""
+    
+        foco.value = ""
+    
+        btnCreate.disabled = false
+        // Foco no campo nome
+        nomeCliente.focus()
+        // Copiar o nome do cliente para o campo nome
+        cpfCliente.value = cpf
+        api.setName()
+
+        api.validateSearch()
+    } else {
+        api.searchCPF(cpf)
+
+        api.renderClientCPF((event, client) => {
+            if (event.key === "Enter") {
+                event.preventDefault() // ignorar o comportamento padrão 
+                //executar o método de busca do cliente
+                buscarCPF()
+                
+
+            }
+            const clientData = JSON.parse(client)
+            arrayClient = clientData
+
+            arrayClient.forEach((c) => {
+                idClient.value = c._id
+                nomeCliente.value = c.nome
+                cpfCliente.value = c.cpf
+                emailCliente.value = c.email
+                telefoneCliente.value = c.telefone
+                cep.value = c.cep
+                logradouro.value = c.logradouro
+                numero.value = c.numero
+                complemento.value = c.complemento
+                bairro.value = c.bairro
+                cidade.value = c.cidade
+                uf.value = c.uf
+
+                // restaurar a tecla Enter
+
+                // desativar o botão adicionar
+                btnCreate.disabled = true
+                // ativar os botões editar e excluir
+                btnUpdate.disabled = false
+                btnDelete.disabled = false
+            })
+
+            
+
+
+        })
+    }
+}
+
+
+
 //== Fim - Manipulação do Enter =============================================
 //===========================================================================
-
 
 //===========================================================================
 //= CRUD Create==============================================================
@@ -98,40 +231,90 @@ frmCli.addEventListener('submit', (event) => {
         cep.value, logradouro.value, numero.value, complemento.value, bairro.value, cidade.value, uf.value
     )
 
-    const cadastroClientes = {
-        nome: nomeCliente.value,
-        cpf: cpfCliente.value,
-        email: emailCliente.value,
-        telefone: telefoneCliente.value,
-        cep: cep.value,
-        logradouro: logradouro.value,
-        numero: numero.value,
-        complemento: complemento.value,
-        bairro: bairro.value,
-        cidade: cidade.value,
-        uf: uf.value
+    //Estratégia para usar o submit para cadastrar um novo cliente ou editar os dados de um cliente já existente
+    //verificar se existe o id do cliente
+    if(idClient.value ==="") {
+        //cadastrar um novo cliente
+        const cadastroClientes = {
+            nome: nomeCliente.value,
+            cpf: cpfCliente.value,
+            email: emailCliente.value,
+            telefone: telefoneCliente.value,
+            cep: cep.value,
+            logradouro: logradouro.value,
+            numero: numero.value,
+            complemento: complemento.value,
+            bairro: bairro.value,
+            cidade: cidade.value,
+            uf: uf.value
+    
+        }
+    
+        console.log("Enviando para o banco: ", cadastroClientes) // Teste
+        //Enviar o objeto para o main (Passo 2: fluxo)
+        api.createClientes(cadastroClientes)
+    }else{
+        //alterar os dados de u cliente existente
+        //Editar um novo Cliente Ecistente
+        const cadastroClientes = {
+            idCli: idClient.value,
+            nome: nomeCliente.value,
+            cpf: cpfCliente.value,
+            email: emailCliente.value,
+            telefone: telefoneCliente.value,
+            cep: cep.value,
+            logradouro: logradouro.value,
+            numero: numero.value,
+            complemento: complemento.value,
+            bairro: bairro.value,
+            cidade: cidade.value,
+            uf: uf.value
+    
+        }
+    
+        console.log("Enviando para o banco: ", cadastroClientes) // Teste
+        //Enviar o objeto para o main (Passo 2: fluxo)
+        api.updateClient(cadastroClientes)
 
     }
 
-    console.log("Enviando para o banco: ", cadastroClientes) // Teste
-    //Enviar o objeto para o main (Passo 2: fluxo)
-    api.createClientes(cadastroClientes)
+    
 })
 
 //== Fim - CRUD Create ======================================================
 //===========================================================================
 
 
+//===========================================================================
+//== CRUD Delete ============================================================
+function removeClient() {
+    //console.log(idClient.value) //teste passo 1
+    //passo 2 - Envio do id para o main
+    api.deleteClient(idClient.value)
+}
+
+
+//== Fim - CRUD Delete ======================================================
+//===========================================================================
+
+
+
 // ==========================================================================
 // == Resetar o formulário ==================================================
 
 function resetForm() {
+
+
+
     // Recarregar a página
     location.reload()
+
 }
 
 // Uso da API reserForm quando salvar, editar ou excluir um cliente
 api.resetForm((args) => {
+    
+    console.log("Reset recebido do main.js")
     resetForm()
 })
 
@@ -157,19 +340,44 @@ window.electron.onReceiveMessage('reset-cpf', () => {
 //= CRUD Read ===============================================================
 
 // Setar o nome do cliente para fazer um novo cadastro se a busca retornar que o cliente não está cadastrado.
+
 api.setName((args) => {
+
     console.log("Teste do IPC 'set-name'")
     // "Recortar" o nome da busca e setar (deixar) no campo nome do formulário
     let busca = document.getElementById('buscarCliente').value
     // Limpar o campo de busca (foco foi capturado de forma global)
-    foco.value=""
+    // Limpar os campos do formulário
+    cpfCliente.value = ""
+    emailCliente.value = ""
+    telefoneCliente.value = ""
+    cep.value = ""
+    logradouro.value = ""
+    numero.value = ""
+    complemento.value = ""
+    bairro.value = ""
+    cidade.value = ""
+    uf.value = ""
+
+    foco.value = ""
+
+    btnCreate.disabled = false
     // Foco no campo nome
     nomeCliente.focus()
     // Copiar o nome do cliente para o campo nome
     nomeCliente.value = busca
+
     // restaurar tecla enter
-    restaurarEnter()
+
+
+
 })
+
+
+
+
+
+
 
 function buscarNome() { // Nome da função é o nome do onclick no buscarCliente
     console.log("Teste do botão buscar")
@@ -194,6 +402,7 @@ function buscarNome() { // Nome da função é o nome do onclick no buscarClient
             arrayClient = clientData
             // Uso do forEach para percorrer o vetor e extrair os dados
             arrayClient.forEach((c) => {
+                idClient.value = c._id
                 nomeCliente.value = c.nome
                 cpfCliente.value = c.cpf
                 emailCliente.value = c.email
@@ -205,15 +414,23 @@ function buscarNome() { // Nome da função é o nome do onclick no buscarClient
                 bairro.value = c.bairro
                 cidade.value = c.cidade
                 uf.value = c.uf
-                // restaurar a tecla enter
-                restaurarEnter()
+
+                // restaurar a tecla Enter
+
+                // desativar o botão adicionar
+                btnCreate.disabled = true
+                // ativar os botões editar e excluir
+                btnUpdate.disabled = false
+                btnDelete.disabled = false
 
             })
         })
     }
 
+
 }
 
-//== Fim - CRUD Read ========================================================
-//===========================================================================
+
+
+
 

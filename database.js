@@ -3,52 +3,53 @@
  * Uso do framework mongoose
  */
 
-// Importação do mongoose
-// Não esquecer de instalar o módulo (npm i mongoose)
+// importação do mongoose
+
 const mongoose = require('mongoose')
 
-// Configuração do banco de dados
-// ip/link do servidor, autenticação
-// Ao final da url definir o nome do banco de dados
-// Exemplo: /dbclientes
+// configuração do banco de dados 
+// ip/linkd do servidor, autenticação, 
+// ao final da url o nome do banco de dados
+// exemplo: /dbnotes
 const url = 'mongodb+srv://admin:123Senac@cluster0.i6pgk.mongodb.net/dbcadastro'
 
-// Validação (evitar a abertura de várias conexões)
+// validação (evitar a abertura de varias  conexões)
 let conectado = false
 
-// Método para conectar com o banco de dados
+// método o para conectar com o banco de dados
 const conectar = async () => {
-    // Se não estiver conectado
     if (!conectado) {
-        // Conectar com o banco de dados
+        // conectar com o banco de dados
         try {
-            await mongoose.connect(url) // Conectar
-            conectado = true // Setar a variável
-            console.log("MongoDB Conectado")
-            return true // Verificação para o main
+            await mongoose.connect(url)
+            conectado = true // setar a variavel 
+            console.log('MongoDB Conectado')
+            
         } catch (error) {
-            console.log(error)
-            return false // Verificação para o main
+            console.error(error)
+            
         }
+
     }
+
 }
 
-// Método para desconectar com o banco de dados
+// método o para desconectar com o banco de dados
 const desconectar = async () => {
-    // Se estiver conectado
     if (conectado) {
-        // Desconectar do banco de dados
+        // desconectado
         try {
-            await mongoose.disconnect(url) // Desconectar
-            conectado = false // Setar a variável
-            console.log("MongoDB Desconectado")
-            return true // Verificação para o main
+            await mongoose.disconnect(url)
+            conectado = false // setar a variavel 
+            console.log('MongoDB Desconectado')
+            
         } catch (error) {
-            console.log(error)
-            return false // Verificação para o main
+            console.error(error)
+            
         }
+
+
     }
 }
-
-// Exportar para o main os métodos conectar e desconectar
+// exportar para o main os métodos conectar e desconectar
 module.exports = {conectar, desconectar}
